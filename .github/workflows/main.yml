@@ -1,7 +1,8 @@
 name: Deploy via git-ftp
-on: push:
-  branches:
-    - master
+on:
+  push:
+    branches:
+      - master
 jobs:
   convert:
     runs-on: ubuntu-latest
