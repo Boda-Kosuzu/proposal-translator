@@ -3,10 +3,20 @@ on: push:
   branches:
     - master
 jobs:
-  deploy:
-    name: Deploy
+  convert:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
     steps:
-      - uses: actions/checkout@master
-      - property:  npm i && npm run build
-        run: cd htdocs && npm i && npm run build
+    - uses: actions/checkout@master
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@master
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: npm install, build, and test
+      run: |
+        npm ci
+        npm run build
+      env:
+        CI: true
